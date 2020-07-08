@@ -1,0 +1,11 @@
+/srv/home/mmalloy/.conda/envs/ece697/lib/python3.7/site-packages/sklearn/utils/validation.py:73: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  return f(**kwargs)
+              precision    recall  f1-score   support
+
+           M       0.83      0.83      0.83        23
+           R       0.79      0.79      0.79        19
+
+    accuracy                           0.81        42
+   macro avg       0.81      0.81      0.81        42
+weighted avg       0.81      0.81      0.81        42
+
