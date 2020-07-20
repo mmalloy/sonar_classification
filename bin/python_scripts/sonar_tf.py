@@ -2,7 +2,6 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
-
 def prep_sonar_dataset(csv_file):
     import pandas as pd
     from sklearn.preprocessing import StandardScaler
@@ -21,6 +20,7 @@ def prep_sonar_dataset(csv_file):
     _X_train = s.fit_transform(_X_train)
     _X_test = s.transform(_X_test)
     return _X_train, _X_test, _y_train, _y_test
+
 
 def get_performance(_model, _X_test, _y_test):
     ## predict on test data
