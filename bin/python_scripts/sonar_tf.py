@@ -15,8 +15,9 @@ def prep_sonar_dataset(csv_file):
     _sonar_df = _sonar_df.sample(frac=1).reset_index(drop=True)
 
     ## Split data into training and test
-    _X = np.array(_sonar_df[[i for i in range(60)]])
-    _y = np.array(_sonar_df[[60]])
+    _X = np.array(_sonar_df[[i for i in range(60)]]).astype(float)
+    print(_sonar_df[60].apply(lambda x: 1 if x=='M' else 0))
+    _y = np.array(_sonar_df[60].apply(lambda x: 1 if x=='M' else 0)).astype(float)
     _X_train, _X_test, _y_train, _y_test = train_test_split(_X, _y, test_size=0.2, random_state=18)
 
     ## Scale data
@@ -26,18 +27,19 @@ def prep_sonar_dataset(csv_file):
     return _X_train, _X_test, _y_train, _y_test
 
 
-def get_peforamance(_model):
+def get_performance(_model, _X_test, _y_test):
     ## predict on test data
-    pred = model.predict(X_test)
+    _pred = _model.predict(_X_test)
     ## model.predict returns a vector for each input
-    y_hat = [0 if i[0] > i[1] else 1 for i in pred]
-    print(classification_report(y_test, y_hat))
-    print('accuracy: ', np.sum(np.abs(y_test-y_hat)))
-    return np.sum(np.abs(y_test-y_hat))
+    _y_hat = [0 if i[0] > i[1] else 1 for i in _pred]
+    #print(classification_report(_y_test, _y_hat))
+    accuracy = 1-np.sum(np.abs(_y_test - _y_hat))/np.size(_y_test)
+    #print('accuracy:', accuracy)
+    return accuracy
 
 if __name__ == '__main__':
-    epochs = 5000
-    X_train, X_test, y_train, y_test = prep_sonar_dataset('sonar_data.csv')
+    epochs = 1000
+    X_train, X_test, y_train, y_test = prep_sonar_dataset('../../data/sonar_data.csv')
 
     ## define nn architecture and compile
     model = keras.Sequential([
@@ -54,5 +56,5 @@ if __name__ == '__main__':
     model.fit(X_train, y_train, epochs=epochs)
 
     ## get performance
-    accuracy = get_performance(model, X_test, y_test)
-    print('final peformance:', accuracy)
+    accuracy = get_performance(model, X_test, y_test)   
+    print('validation accuracy:', accuracy)
