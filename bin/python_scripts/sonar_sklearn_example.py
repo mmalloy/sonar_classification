@@ -3,13 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn import svm
-from sklearn.neural_network import MLPClassifier
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 
-sonar_df = pd.read_csv('../../data/sonar_data.csv', header=None)  #column 60 is the label
+#sonar_df = pd.read_csv('../../data/sonar_data.csv', header=None)  #column 60 is the label
+sonar_df = pd.read_csv("https://uwmadison.box.com/shared/static/yf9jbcw1espe2djbfw9o1m0bw4ngyyrc.csv", header=None)  #column 60 is the label
+
 sonar_df = sonar_df.sample(frac=1).reset_index(drop=True)
 
 ## Split data into training and test

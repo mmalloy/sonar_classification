@@ -32,8 +32,10 @@ def get_performance(_model, _X_test, _y_test):
 
 
 if __name__ == '__main__':
-    epochs = 1000
-    X_train, X_test, y_train, y_test = prep_sonar_dataset('../../data/sonar_data.csv')
+    epochs = 100
+
+    #X_train, X_test, y_train, y_test = prep_sonar_dataset('../../data/sonar_data.csv')
+    X_train, X_test, y_train, y_test = prep_sonar_dataset("https://uwmadison.box.com/shared/static/yf9jbcw1espe2djbfw9o1m0bw4ngyyrc.csv")
 
     ## define nn architecture and compile
     model = keras.Sequential([
