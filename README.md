@@ -11,7 +11,7 @@ Installation is not provided
 The code can be run by calling the scripts from bin/python/
 for example:
 ```bash
-python sonar_tf.py
+python sonar_nn.py
 ```
 or, to sweep over nn paramaters
 
