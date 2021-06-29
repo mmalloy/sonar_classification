@@ -1,4 +1,4 @@
-from sonar_tf import prep_sonar_dataset, get_performance  #file sonar_tf.py must be in working directory to import
+from sonar_nn import prep_sonar_dataset, get_performance  #file sonar_tf.py must be in working directory to import
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
