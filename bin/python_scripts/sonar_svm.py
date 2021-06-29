@@ -1,6 +1,7 @@
 import numpy as np
-import tensorflow as tf
-from tensorflow import keras
+import pandas as pd
+from sklearn import svm
+
 
 def prep_sonar_dataset(csv_file):
     import pandas as pd
@@ -24,33 +25,24 @@ def prep_sonar_dataset(csv_file):
 
 def get_performance(_model, _X_test, _y_test):
     ## predict on test data
-    _pred = _model.predict(_X_test)
-    ## model.predict returns a vector for each input
-    _y_hat = [0 if i[0] > i[1] else 1 for i in _pred]
+    _y_hat = _model.predict(_X_test)
     accuracy = 1-np.sum(np.abs(_y_test - _y_hat))/np.size(_y_test)
     return accuracy
 
 
 if __name__ == '__main__':
-    epochs = 100
+    
+    X_train, X_test, y_train, y_test = prep_sonar_dataset('../../data/sonar_data.csv')
+    #X_train, X_test, y_train, y_test = prep_sonar_dataset("https://uwmadison.box.com/shared/static/yf9jbcw1espe2djbfw9o1m0bw4ngyyrc.csv")
 
-    #X_train, X_test, y_train, y_test = prep_sonar_dataset('../../data/sonar_data.csv')
-    X_train, X_test, y_train, y_test = prep_sonar_dataset("https://uwmadison.box.com/shared/static/yf9jbcw1espe2djbfw9o1m0bw4ngyyrc.csv")
+    ## Train an SVM
+    model = svm.SVC()
+    model.fit(X_train, y_train)
 
-    ## define nn architecture and compile
-    model = keras.Sequential([
-        keras.Input(shape=(60)),
-        keras.layers.Dense(15),
-        keras.layers.Dense(15),
-        keras.layers.Dense(2)
-    ])
-
-    model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
-    ## train nn
-    model.fit(X_train, y_train, epochs=epochs)
-
+    ## Predict classes on test data
+    #y_test = model.predict(X_test)
+    #print('shape y_test', np.shape(y_test))
     ## get performance
+
     accuracy = get_performance(model, X_test, y_test)
-    print('validation accuracy:', accuracy)
+    print('SVM validation accuracy:', accuracy)

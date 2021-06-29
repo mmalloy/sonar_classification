@@ -13,4 +13,4 @@ bootstrap_conda
 
 conda activate ece697
 
-python ../python_scripts/sonar_tf.py
+python ../python_scripts/sonar_nn.py
